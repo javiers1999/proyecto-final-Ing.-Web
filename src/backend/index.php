@@ -2,6 +2,8 @@
 
 include("Database.php");
 
+session_start();
+
 switch( $_SERVER["REQUEST_METHOD"] ) {
 
     case "CREATE":
@@ -32,12 +34,12 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
 
         foreach( $tickets as $ticket ) {
 
-            $t["id"]          = $ticket["id"];          //INT AUTOINCREMENT PRIMARY KEY
-            $t["estado"]      = $ticket["estado"];      //TINYINT 
-            $t["prioridad"]   = $ticket["prioridad"];   //TINYINT
-            $t["categoria"]   = $ticket["categoria"];   //VARCHAR(255)
-            $t["asunto"]      = $ticket["asunto"];      //VARCHAR(255)
-            $t["descripcion"] = $ticket["descripcion"]; //VARCHAR(255)
+            $t["id"]          = $ticket["id"];        
+            $t["estado"]      = $ticket["estado"];      
+            $t["prioridad"]   = $ticket["prioridad"];   
+            $t["categoria"]   = $ticket["categoria"];   
+            $t["asunto"]      = $ticket["asunto"];      
+            $t["descripcion"] = $ticket["descripcion"]; 
 
             array_push($json_tickets, $t);
         }
