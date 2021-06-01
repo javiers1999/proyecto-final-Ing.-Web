@@ -1,5 +1,17 @@
-<form [formGroup]="formularioInicio">
-    <ul>
+<head>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<header>
+    <h1>Foro de Reclamos</h1>
+    
+</header>
+
+<!-- formulario para el inicio de sesion -->
+
+<form [formGroup]="formularioInicio" class="forms" action="?" method="POST">
+    <h2>Formulario de Ingreso</h2>
+    <ul id="forms1">
         <li>
             <label for="usuario">Usuario</label>
             <input formControlName="usuario" type="text" name="usuario" id="usuario">
@@ -9,6 +21,62 @@
             <label for="contraseña">Contraseña</label>
             <input formControlName="contraseña" type="password" id="contraseña">
         </li>
+
+        <li>
+            <div class="g-recaptcha" data-sitekey="6LcHzwYbAAAAAEu7Fw4SBCqrpcNtasoJxutWcoeX"></div>
+        </li>
+
+        <li>
+            <button type="submit">Iniciar</button>
+        </li>
+    </ul>
+</form>
+
+<!-- formulario para el reclamo -->
+
+<form [formGroup]="formularioReclamo" (ngSubmit)="agregar()" class="forms">
+    <h2>Formulario de Reclamo</h2>
+    <ul id="forms2">
+        <li>
+            <label for="asunto">Asunto</label>
+            <input formControlName="asunto" type="text">
+        </li>
+        <li>
+            <label for="descripcion">Descripcion</label>
+            <textarea formControlName="descripcion" name="descripcion" cols="30" rows="10"></textarea>
+        </li>
+        <li>
+            <label for="categoria">Categoria</label>
+            <select formControlName="categorias">
+                <option selected value=""></option>
+                <option formControlName="solicitudGenerica" value="generica">Solicitud Generica</option>
+                <option formControlName="solicitudCambio" value="cambio">Solicitud de Cambio</option>
+                <option formControlName="incidente" value="incidente">Incidente</option>
+                <option formControlName="problema" value="problema">Problema</option>
+                <option formControlName="solicitudHardware" value="hardware">Solicitud de Hardware</option>
+                <option formControlName="solicitudSoftware" value="software">Solicitud de Software Nuevo</option>
+            </select>
+        </li>
+        <li>
+            <label for="prioridad">Prioridad</label>
+            <select formControlName="prioridades">
+                <option selected="selected" value=""></option>
+                <option formControlName="prAlta" value="alta">Alta</option>
+                <option formControlName="prMedia" value="media">Media</option>
+                <option formControlName="prBaja" value="baja">Baja</option>
+            </select>
+        </li>
+        <li>
+            <button type="submit">Enviar</button>
+        </li>
     </ul>
 
 </form>
+
+<footer>
+    <ul id="foot">
+        <li>+971232312</li>
+        <li>@reclamos.cl</li>
+        <li>redes sociales</li>
+    </ul>
+</footer>
