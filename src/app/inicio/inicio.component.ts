@@ -15,8 +15,8 @@ export class InicioComponent implements OnInit {
   formularioReclamo:FormGroup;
   asunto:any;
   descripcion:any;
-  categoria:any;
-  prioridad:any;
+  categorias:any;
+  prioridades:any;
   estado:any = "abierto";
 
   //listas para la solicitud "generica"
@@ -58,81 +58,81 @@ export class InicioComponent implements OnInit {
     this.formularioReclamo = this.fr.group({
       asunto:['',Validators.required],
       descripcion:['',Validators.required],
-      categoria:['',Validators.required],
-      prioridad:['',Validators.required]
+      categorias:['',Validators.required],
+      prioridades:['',Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.asunto = this.formularioReclamo.get("asunto") as FormGroup;
     this.descripcion = this.formularioReclamo.get("descripcion") as FormGroup;
-    this.categoria = this.formularioReclamo.get("categorias") as FormGroup;
-    this.prioridad = this.formularioReclamo.get("prioridades") as FormGroup;
+    this.categorias = this.formularioReclamo.get("categorias") as FormGroup;
+    this.prioridades = this.formularioReclamo.get("prioridades") as FormGroup;
   }
 
   agregar(){
 
-    if(this.categoria.value == "generica"){
-
-      if(this.prioridad.value == "alta"){
+    if(this.categorias.value == "generica"){
+      if(this.prioridades.value == "alta"){
         this.listaGenericaAlta.push(this.asunto.value);
-      }else if (this.prioridad.value == "media"){
+      }else if (this.prioridades.value == "media"){
         this.listaGenericaMedia.push(this.asunto.value);
-      }else if (this.prioridad.value == "baja"){
+      }else if (this.prioridades.value == "baja"){
         this.listaGenericaBaja.push(this.asunto.value);
       }
 
-    }else if (this.categoria.value == "cambio"){
-
-      if(this.prioridad.value == "alta"){
+    }else if(this.categorias.value == "cambio"){
+      if(this.prioridades.value == "alta"){
         this.listaCambioAlta.push(this.asunto.value);
-      }else if (this.prioridad.value == "media"){
+      }else if (this.prioridades.value == "media"){
         this.listaCambioMedia.push(this.asunto.value);
-      }else if (this.prioridad.value == "baja"){
+      }else if (this.prioridades.value == "baja"){
         this.listaCambioBaja.push(this.asunto.value);
       }
 
-    }else if (this.categoria.value == "incidente"){
+    }else if(this.categorias.value == "incidente"){
 
-      if(this.prioridad.value == "alta"){
+      if(this.prioridades.value == "alta"){
         this.listaIncidenteAlta.push(this.asunto.value);
-      }else if (this.prioridad.value == "media"){
+      }else if (this.prioridades.value == "media"){
         this.listaIncidenteMedia.push(this.asunto.value);
-      }else if (this.prioridad.value == "baja"){
+      }else if (this.prioridades.value == "baja"){
         this.listaIncidenteBaja.push(this.asunto.value);
       }
 
-    }else if (this.categoria.value == "problema"){
+    }else if(this.categorias.value == "problema"){
 
-      if(this.prioridad.value == "alta"){
+      if(this.prioridades.value == "alta"){
         this.listaProblemaAlta.push(this.asunto.value);
-      }else if (this.prioridad.value == "media"){
+      }else if (this.prioridades.value == "media"){
         this.listaProblemaMedia.push(this.asunto.value);
-      }else if (this.prioridad.value == "baja"){
+      }else if (this.prioridades.value == "baja"){
         this.listaProblemaBaja.push(this.asunto.value);
       }
 
-    }else if (this.categoria.value == "hardware"){
+    }else if(this.categorias.value == "hardware"){
 
-      if(this.prioridad.value == "alta"){
+      if(this.prioridades.value == "alta"){
         this.listaHardwareAlta.push(this.asunto.value);
-      }else if (this.prioridad.value == "media"){
+      }else if (this.prioridades.value == "media"){
         this.listaHardwareMedia.push(this.asunto.value);
-      }else if (this.prioridad.value == "baja"){
+      }else if (this.prioridades.value == "baja"){
         this.listaHardwareBaja.push(this.asunto.value);
       }
 
-    }else if (this.categoria.value == "software"){
+    }else if(this.categorias.value == "software"){
 
-      if(this.prioridad.value == "alta"){
+      if(this.prioridades.value == "alta"){
         this.listaSoftwareAlta.push(this.asunto.value);
-      }else if (this.prioridad.value == "media"){
+      }else if (this.prioridades.value == "media"){
         this.listaSoftwareMedia.push(this.asunto.value);
-      }else if (this.prioridad.value == "baja"){
+      }else if (this.prioridades.value == "baja"){
         this.listaSoftwareBaja.push(this.asunto.value);
       }
 
     }
+
+    this.formularioReclamo.reset();
   }
 
 }
