@@ -6,28 +6,12 @@ session_start();
 switch( $_SERVER["REQUEST_METHOD"] ) {
 
     $db = new Database();
+    $user = $db->validarToken($_SESSION["token"]);
 
-    case "CREATE":
-        $user = $db->validarToken($_SESSION["token"]);
+    case "PUT":
+
         if( !isset($user["rol"]) ) return;
-
-        if( $user["rol"] == 0 ) {
-            $ticket = json_decode( file_get_contents("php://input"), TRUE );
-            if( $ticket != NULL ) {
-                
-                if( !$db->ingresarTicket($ticket) ) {
-                    header("HTTP/1.1 500 Internal Server Error");
-                }
-            }
-        }
-
-        break;
-
-    case "UPDATE":
-
-        $user = $db->validarToken($_SESSION["token"]);
-        if( !isset($user["rol"]) ) return;
-
+        // Actualizar ticket si el rol es de administrador
         if( $user["rol"] == 1 ) {
             
             $ticket = json_decode( file_get_contents("php://input"), TRUE );
@@ -44,52 +28,58 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             header("HTTP/1.1 401 Unauthorized");
 
         }
-
         break;
 
     case "DELETE":
-        
-        $user = $db->validarToken($_SESSION["token"]);
+
         if( !isset($user["rol"]) ) return;
-        
+        // Borrar ticket si el rol es de administrador
         if( $user["rol"] == 1 ) {
             
             $ticket = json_decode( file_get_contents("php://input"), TRUE );
         
             if( $ticket != NULL ) {
                 if( isset($ticket["id"]) ) {
-                    $db->execute("DELETE FROM ticket WHERE id=".$ticket["id"]);
+                    $n = $db->execute("DELETE FROM ticket WHERE id=".$ticket["id"]);
+
+                    if( $n == False ) {
+
+                        header("HTTP/1.1 500 Internal Server Error");
+
+                    }
+
                 }
             }
 
         } else {
 
-            header("HTTP/1.1 401 Unauthorized")
+            header("HTTP/1.1 401 Unauthorized");
 
         }
-
         break;
     
     case "GET":
         
+        // Cerrar Sesion
         if( isset($_GET["logout"]) ) {
 
-            $user = $db->validarToken($_SESSION["token"]);
             if( $user == NULL ) return;
 
-            $db->execute("UPDATE usuarios SET token='' WHERE nombre='".$user["nombre"]."'");
+            $db->execute("UPDATE usuarios SET token='' WHERE nombre='".$user["nombre"]."' ");
             session_destroy();
 
             return;
+
         }
 
-        $json_user = "";
+        // Obtener Tickets
+        $json_username = "";
         if( isset($_SESSION["token"]) ) {
-            $user = $db->validarToken($_SESSION["token"]);
 
             if( $user != NULL ) {
-                $json_user = $user["nombre"];
+                $json_username = $user["nombres"]." ".$user["apellidos"];
             }
+
         }
 
         $result = $db->query("SELECT * FROM ticket");
@@ -106,34 +96,44 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             $t["descripcion"] = $ticket["descripcion"];
             $t["respuesta"]   = $ticket["respuesta"];
 
-            array_push($json_tickets, $t);
+            array_push( $json_tickets, $t );
         }
 
-        echo json_encode( array($json_user, $json_tickets) );
+        echo json_encode( array("usuario" => $json_username, 
+                                "tickets" => $json_tickets)  );
         break;
 
     case "POST":
-        
-        if( !isset($_SESSION["token"]) && isset($_POST["nombre"]) && isset($_POST["contrasena"]) ) {
+
+        if( $user == NULL ) {
             
-            $stmt = $db->prepare("SELECT contrasena FROM usuarios WHERE nombre=?");
-            $res = $stmt->execute( array($_POST["nombre"]) );
+            // Inicio de sesion
+            if( isset($_POST["nombre_usuario"]) && isset($_POST["password"]) ) {
 
-            $user = $res->fetch();
-            if( $user != NULL ) {
-                
-                if( password_verify($_POST["contrasena"], $user["contrasena"]) ) {
-                    $token = sha1( random_bytes(12) );
-                    
-                    $up = $db->execute("UPDATE usuarios SET token=$token WHERE nombre='".$_POST["nombre"]."'");
-                    
-                    if( $up == 1 ) {
+                $stmt = $db->prepare("SELECT password FROM usuarios WHERE nombre_usuario=?");
+                $res = $stmt->execute( array($_POST["nombre"]) );
 
-                        $_SESSION["token"] = $token;
+                $user = $res->fetch();
+                if( $user != NULL ) {
+                    
+                    if( password_verify($_POST["password"], $user["password"]) ) {
+                        $token = sha1( random_bytes(12) );
+                        
+                        $up = $db->execute("UPDATE usuarios SET token=$token WHERE password='".$user["password"]."'");
+                        
+                        if( $up == 1 ) {
+
+                            $_SESSION["token"] = $token;
+
+                        } else {
+
+                            header("HTTP/1.1 500 Internal Server Error");
+
+                        }
 
                     } else {
 
-                        header("HTTP/1.1 500 Internal Server Error");
+                        header("HTTP/1.1 401 Unauthorized");
 
                     }
 
@@ -143,13 +143,48 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
 
                 }
 
-            } else {
+            }
 
-                header("HTTP/1.1 401 Unauthorized");
+            // Registro de nuevo usuario
+            else {
+                
+                $new_user = json_decode( file_get_contents("php://input"), TRUE );
+                if( $new_user != NULL ) {
+
+                    if( !$db->ingresarUsuario($new_user) ) {
+
+                        header("HTTP/1.1 500 Internal Server Error");
+
+                    } else {
+
+                        header("HTTP/1.1 201 Created");
+
+                    }
+
+                }
+            }
+        }
+
+        // Crear ticket si el rol es de usuario
+        else if( $user["rol"] == 0 ) {
+            
+            $ticket = json_decode( file_get_contents("php://input"), TRUE );
+            if( $ticket != NULL ) {
+                
+                if( !$db->ingresarTicket($ticket) ) {
+
+                    header("HTTP/1.1 500 Internal Server Error");
+
+                } else {
+
+                    header("HTTP/1.1 201 Created");
+
+                }
 
             }
 
         }
+
 }
 
 ?>

@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { InicioComponent } from './inicio/inicio.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegistroComponent } from './registro/registro.component';
+import { BackOfficeComponent } from './back-office/back-office.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InicioComponent
+    InicioComponent,
+    RegistroComponent,
+    BackOfficeComponent
   ],
   imports: [
     BrowserModule,
