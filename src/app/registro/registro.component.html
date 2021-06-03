@@ -1,0 +1,70 @@
+
+<head>
+    <title>Foro de Reclamos</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<div class="container">
+    <div class="row">
+        <h1>Foro de Reclamos</h1>
+    </div>
+    <div class="row"></div>
+        <form>
+            <h2>Formulario de Registro</h2>
+            <ul>
+                <li>
+                    <label class="form-label" for="nombres">Nombres</label>
+                    <input type="text" formControlName="nombres" name="nombres" id="nombres">
+                </li>
+                <li>
+                    <label class="form-label" for="apellidos">Apellidos</label>
+                    <input type="text" formControlName="apellidos" name="apellidos" id="apellidos">
+                </li>
+                <li>
+                    <label class="form-label" for="rut">Rut</label>
+                    <input type="text" formControlName="rut" name="rut" id="rut">
+                </li>
+                <li>
+                    <label class="form-label" for="pass">Contraseña</label>
+                    <input type="password" formControlName="pass" name="pass" id="pass">
+                </li>
+                <li>
+                    <label class="form-label" for="correo">Correo Electronico</label>
+                    <input type="mail" formControlName="correo" name="correo" id="correo">
+                </li>
+                <li>
+                    <label class="form-label" for="direccion">Direccion</label>
+                    <input type="text" formControlName="direccion" name="direccion" id="direccion">
+                </li>
+                <li>
+                    <label class="form-label" for="region">Region</label>
+                    <select id="region">
+                        <option selected value="">Seleccionar..</option>
+                        <option id="1" value="AP">Arica y Parinacota</option>
+                        <option id="2" value="TA">Tarapaca</option>
+                        <option id="3" value="AN">Antofagasta</option>
+                        <option id="4" value="AT">Atacama</option>
+                        <option id="5" value="CO">Coquimbo</option>
+                        <option id="6" value="VA">Valparaiso</option>
+                        <option id="7" value="RM">Metropolitana</option>
+                        <option id="8" value="OH">Ohiggins</option>
+                        <option id="9" value="MA">Maule</option>
+                        <option id="10" value="NU">Ñuble</option>
+                        <option id="11" value="BI">Bio Bio</option>
+                        <option id="12" value="IAR">La Araucania</option>
+                        <option id="13" value="LR">Los Rios</option>
+                        <option id="14" value="LL">Los Lagos</option>
+                        <option id="15" value="AY">Aysen</option>
+                        <option id="16" value="MG">Magallanes</option>
+                    </select>
+                </li>
+                <li>
+                    <label class="form-label" for="comuna">Comuna</label>
+                    <select>
+                        
+                    </select>
+                    <!--Select-->
+                </li>
+            </ul>
+        </form>
+</div>
