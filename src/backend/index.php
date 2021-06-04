@@ -1,12 +1,18 @@
 <?php
 
 include("Database.php");
+
+$db = new Database();
+if( $db->connection == NULL ) exit(0);
+$con = $db->connection;
+
+$user = NULL;
+
 session_start();
-
+if( isset($_SESSION["token"]) )
+   $user = $db->validarToken($_SESSION["token"]);
+    
 switch( $_SERVER["REQUEST_METHOD"] ) {
-
-    $db = new Database();
-    $user = $db->validarToken($_SESSION["token"]);
 
     case "PUT":
 
@@ -40,7 +46,7 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
         
             if( $ticket != NULL ) {
                 if( isset($ticket["id"]) ) {
-                    $n = $db->execute("DELETE FROM ticket WHERE id=".$ticket["id"]);
+                    $n = $con->execute("DELETE FROM ticket WHERE id=".$ticket["id"]);
 
                     if( $n == False ) {
 
@@ -65,11 +71,10 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
 
             if( $user == NULL ) return;
 
-            $db->execute("UPDATE usuarios SET token='' WHERE nombre='".$user["nombre"]."' ");
+            $con->exec("UPDATE usuarios SET token='' WHERE token='".$user["token"]."' ");
             session_destroy();
 
-            return;
-
+            break;
         }
 
         // Obtener Tickets
@@ -77,14 +82,14 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
         if( isset($_SESSION["token"]) ) {
 
             if( $user != NULL ) {
-                $json_username = $user["nombres"]." ".$user["apellidos"];
+               $json_username = utf8_encode($user["nombres"]." ".$user["apellidos"]);
             }
 
         }
-
-        $result = $db->query("SELECT * FROM ticket");
+        
+        $result = $con->query("SELECT * FROM ticket");
         $tickets = $result->fetchAll();
-
+        
         $json_tickets = array();
         foreach( $tickets as $ticket ) {
 
@@ -92,15 +97,16 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             $t["estado"]      = $ticket["estado"];
             $t["prioridad"]   = $ticket["prioridad"];
             $t["categoria"]   = $ticket["categoria"];
-            $t["asunto"]      = $ticket["asunto"];
-            $t["descripcion"] = $ticket["descripcion"];
-            $t["respuesta"]   = $ticket["respuesta"];
+            $t["asunto"]      = utf8_encode($ticket["asunto"]);
+            $t["descripcion"] = utf8_encode($ticket["descripcion"]);
+            $t["respuesta"]   = utf8_encode($ticket["respuesta"]);
 
             array_push( $json_tickets, $t );
         }
-
-        echo json_encode( array("usuario" => $json_username, 
-                                "tickets" => $json_tickets)  );
+        
+        $json["username"] = $json_username;
+        $json["tickets"]  = $json_tickets;
+        echo json_encode( $json, JSON_UNESCAPED_UNICODE );
         break;
 
     case "POST":
@@ -109,17 +115,18 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             
             // Inicio de sesion
             if( isset($_POST["nombre_usuario"]) && isset($_POST["password"]) ) {
-
-                $stmt = $db->prepare("SELECT password FROM usuarios WHERE nombre_usuario=?");
-                $res = $stmt->execute( array($_POST["nombre"]) );
-
-                $user = $res->fetch();
+                
+             
+                $stmt = $con->prepare("SELECT password FROM usuarios WHERE nombre_usuario=?");
+                $res = $stmt->execute( array($_POST["nombre_usuario"]) );
+                
+                $user = $stmt->fetch();
                 if( $user != NULL ) {
                     
                     if( password_verify($_POST["password"], $user["password"]) ) {
                         $token = sha1( random_bytes(12) );
                         
-                        $up = $db->execute("UPDATE usuarios SET token=$token WHERE password='".$user["password"]."'");
+                        $up = $con->exec("UPDATE usuarios SET token='$token' WHERE password='".$user["password"]."'");
                         
                         if( $up == 1 ) {
 
@@ -148,20 +155,20 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             // Registro de nuevo usuario
             else {
                 
-                $new_user = json_decode( file_get_contents("php://input"), TRUE );
-                if( $new_user != NULL ) {
+               $new_user = json_decode( file_get_contents("php://input"), TRUE );
+               if( isset($new_user["nombre_usuario"]) ) {
+                    
+                  if( !$db->ingresarUsuario($new_user) ) {
 
-                    if( !$db->ingresarUsuario($new_user) ) {
+                     header("HTTP/1.1 500 Internal Server Error");
 
-                        header("HTTP/1.1 500 Internal Server Error");
+                  } else {
 
-                    } else {
+                     header("HTTP/1.1 201 Created");
 
-                        header("HTTP/1.1 201 Created");
-
-                    }
-
-                }
+                  }
+                  
+               }
             }
         }
 
@@ -171,16 +178,15 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             $ticket = json_decode( file_get_contents("php://input"), TRUE );
             if( $ticket != NULL ) {
                 
-                if( !$db->ingresarTicket($ticket) ) {
+               if( !$db->ingresarTicket($ticket) ) {
 
-                    header("HTTP/1.1 500 Internal Server Error");
+                 header("HTTP/1.1 500 Internal Server Error");
 
-                } else {
+               } else {
 
-                    header("HTTP/1.1 201 Created");
+                 header("HTTP/1.1 201 Created");
 
-                }
-
+               }
             }
 
         }
