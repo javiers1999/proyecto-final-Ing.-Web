@@ -70,6 +70,7 @@ export class InicioComponent implements OnInit {
     this.prioridades = this.formularioReclamo.get("prioridades") as FormGroup;
   }
 
+  //lenado de listas
   agregar(){
 
     if(this.categorias.value == "generica"){

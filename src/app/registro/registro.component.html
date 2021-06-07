@@ -10,34 +10,34 @@
     <div class="row"></div>
         <form [formGroup]="formularioRegistro" class="forms" action="?" method="POST">
             <h2>Formulario de Registro</h2>
-            <ul>
+            <ul id="forms1">
                 <li>
                     <label class="form-label" for="nombres">Nombres</label>
-                    <input type="text" formControlName="nombres" name="nombres" id="nombres">
+                    <input class="form-control" type="text" formControlName="nombres" name="nombres" id="nombres">
                 </li>
                 <li>
                     <label class="form-label" for="apellidos">Apellidos</label>
-                    <input type="text" formControlName="apellidos" name="apellidos" id="apellidos">
+                    <input class="form-control" type="text" formControlName="apellidos" name="apellidos" id="apellidos">
                 </li>
                 <li>
                     <label class="form-label" for="rut">Rut</label>
-                    <input type="text" formControlName="rut" name="rut" id="rut">
+                    <input class="form-control" type="text" formControlName="rut" name="rut" id="rut">
                 </li>
                 <li>
                     <label class="form-label" for="pass">Contraseña</label>
-                    <input type="password" formControlName="pass" name="pass" id="pass">
+                    <input class="form-control" type="password" formControlName="pass" name="pass" id="pass">
                 </li>
                 <li>
                     <label class="form-label" for="correo">Correo Electronico</label>
-                    <input type="mail" formControlName="correo" name="correo" id="correo">
+                    <input class="form-control" type="mail" formControlName="correo" name="correo" id="correo">
                 </li>
                 <li>
                     <label class="form-label" for="direccion">Direccion</label>
-                    <input type="text" formControlName="direccion" name="direccion" id="direccion">
+                    <input class="form-control" type="text" formControlName="direccion" name="direccion" id="direccion">
                 </li>
                 <li>
                     <label class="form-label" for="region">Region</label>
-                    <select formControlName="region" id="region">
+                    <select class="form-select" aria-label="Region" formControlName="region" id="region">
                         <option selected value="">Seleccionar..</option>
                         <option id="1" value="AP">Arica y Parinacota</option>
                         <option id="2" value="TA">Tarapaca</option>
@@ -59,8 +59,8 @@
                 </li>
                 <li>
                     <label class="form-label" for="comuna">Comuna</label>
-                    <select formControlName="comuna">
-                        
+                    <select class="form-select" formControlName="comuna">
+                        <option selected value="">Seleccionar..</option>
                     </select>
                     <!--Select-->
                 </li>

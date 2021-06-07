@@ -30,8 +30,9 @@
                             <button class="btn btn-danger" type="submit">Iniciar</button>
                         </li>
                         <li>
+                            <label class="form-label" for="registrarse">Si no tiene cuenta registrese aqui:  </label>
                             <a [routerLink]="['/registro']" routerLinkActive="router-link-active" >
-                                <button class="btn btn-danger" type="submit">Registrarse</button>
+                                <button class="btn btn-info" type="submit">Registrarse</button>
                             </a>
                         </li>
                     </ul>
@@ -83,8 +84,9 @@
                         </div>
                     </div>
                        <!-- Listas de los reportes de solicitudes genericas -->
+                    <h2 id="reclamos">Tickets publicados</h2>
                     <ul class="lists">
-                        Genericas
+                        <h3>Solicitudes Genericas</h3>
                         <ul class="prAlta">
                             <li class="A" *ngFor="let item of listaGenericaAlta">{{item}}</li>
                         </ul> 
@@ -97,7 +99,7 @@
                     </ul>
                     <!-- Listas de los reportes de solicitudes de cambio -->
                     <ul class="lists">
-                        Cambio
+                        <h3>Cambio</h3>
                         <ul class="prAlta">
                             <li class="A" *ngFor="let item of listaCambioAlta">{{item}}</li>
                         </ul> 
@@ -110,7 +112,7 @@
                     </ul>
                     <!-- Listas de los reportes de incidentes -->
                     <ul class="lists">
-                        Incidentes
+                        <h3>Incidentes</h3>
                         <ul class="prAlta">
                             <li class="A" *ngFor="let item of listaIncidenteAlta">{{item}}</li>
                         </ul> 
@@ -123,7 +125,7 @@
                     </ul>
                     <!-- Listas de los reportes de problemas -->
                     <ul class="lists">
-                        Problemas
+                        <h3>Problemas</h3>
                         <ul class="prAlta">
                             <li class="A" *ngFor="let item of listaProblemaAlta">{{item}}</li>
                         </ul> 
@@ -136,7 +138,7 @@
                     </ul>
                     <!-- Listas de los reportes de solicitudes de hardware -->
                     <ul class="lists">
-                        Hardware
+                        <h3>Solicitud de Hardware</h3>
                         <ul class="prAlta">
                             <li class="A" *ngFor="let item of listaHardwareAlta">{{item}}</li>
                         </ul> 
@@ -149,7 +151,7 @@
                     </ul>
                     <!-- Listas de los reportes de solicitudes de cambio de software -->
                     <ul class="lists">
-                        Software
+                        <h3>Cambio de Software</h3>
                         <ul class="prAlta">
                             <li class="A" *ngFor="let item of listaSoftwareAlta">{{item}}</li>
                         </ul> 
@@ -169,7 +171,6 @@
             <ul id="foot">
                 <li>+971232312</li>
                 <li>empresa@reclamos.cl</li>
-                <li>redes sociales </li>
             </ul>
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
