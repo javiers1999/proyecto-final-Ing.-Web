@@ -27,7 +27,9 @@
                         </li>
                     
                         <li>
-                            <button class="btn btn-danger" type="submit">Iniciar</button>
+                            <a [routerLink]="['/foro']" routerLinkActive="router-link-active" >
+                                <button class="btn btn-danger" type="submit">Iniciar</button>
+                            </a>
                         </li>
                         <li>
                             <label class="form-label" for="registrarse">Si no tiene cuenta registrese aqui:  </label>
@@ -36,133 +38,6 @@
                             </a>
                         </li>
                     </ul>
-                </form>
-            </div>
-            
-            <div class="row">
-            <!-- formulario para el reclamo -->
-                <form [formGroup]="formularioReclamo" (ngSubmit)="agregar()" class="forms" novalidate>
-                    <h2>Formulario de Reclamo</h2>
-                        <div class="form-floating">
-                            
-                            <input class="form-control" id="asunto" formControlName="asunto" type="text">
-                            <label class="form-label"  for="asunto">Asunto</label>
-                        </div>
-                        <div class="form-floating">
-                            
-                            <textarea class="form-control" id="descripcion" formControlName="descripcion" name="descripcion"  rows="20"></textarea>
-                            <label class="form-label" for="descripcion">Descripcion</label>
-                        </div>
-                        <div class="form-floating">
-                            
-                            <select class="form-select" id="categoria" aria-label="Categoría" formControlName="categorias">
-                                <option selected value="">Seleccionar...</option>
-                                <option id="solicitudGenerica" value="generica">Solicitud Generica</option>
-                                <option id="solicitudCambio" value="cambio">Solicitud de Cambio</option>
-                                <option id="incidente" value="incidente">Incidente</option>
-                                <option id="problema" value="problema">Problema</option>
-                                <option id="solicitudHardware" value="hardware">Solicitud de Hardware</option>
-                                <option id="solicitudSoftware" value="software">Solicitud de Software Nuevo</option>
-                            </select>
-                            <label class="form-label" for="categoria">Categoría</label>
-                        </div>
-                        <div class="row row-cols-lg-auto">
-                            <div class="form-floating">
-                            <select class="form-select" id="prioridad" aria-label="Prioridad" formControlName="prioridades">
-                                <option selected="selected" value=""></option>
-                                <option id="alta" value="alta">Alta</option>
-                                <option id="media" value="media">Media</option>
-                                <option id="baja" value="baja">Baja</option>
-                            </select>
-                            <label class="form-label" for="prioridad">Prioridad</label>
-                        </div>
-                    </div>
-                    <div class="row row-cols-lg-auto">
-                        <div>
-                            <button class="btn btn-primary" type="submit">Enviar</button> &nbsp;
-                            <button class="btn btn-secondary" type="reset">Limpiar</button>
-                        </div>
-                    </div>
-                       <!-- Listas de los reportes de solicitudes genericas -->
-                    <h2 id="reclamos">Tickets publicados</h2>
-                    <ul class="lists">
-                        <h3>Solicitudes Genericas</h3>
-                        <ul class="prAlta">
-                            <li class="A" *ngFor="let item of listaGenericaAlta">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia">
-                            <li class="B" *ngFor="let item of listaGenericaMedia">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja">
-                            <li class="C" *ngFor="let item of listaGenericaBaja">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de solicitudes de cambio -->
-                    <ul class="lists">
-                        <h3>Cambio</h3>
-                        <ul class="prAlta">
-                            <li class="A" *ngFor="let item of listaCambioAlta">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia">
-                            <li class="B" *ngFor="let item of listaCambioMedia">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja">
-                            <li class="C" *ngFor="let item of listaCambioBaja">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de incidentes -->
-                    <ul class="lists">
-                        <h3>Incidentes</h3>
-                        <ul class="prAlta">
-                            <li class="A" *ngFor="let item of listaIncidenteAlta">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia">
-                            <li class="B" *ngFor="let item of listaIncidenteMedia">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja">
-                            <li class="C" *ngFor="let item of listaIncidenteBaja">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de problemas -->
-                    <ul class="lists">
-                        <h3>Problemas</h3>
-                        <ul class="prAlta">
-                            <li class="A" *ngFor="let item of listaProblemaAlta">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia">
-                            <li class="B" *ngFor="let item of listaProblemaMedia">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja">
-                            <li class="C" *ngFor="let item of listaProblemaBaja">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de solicitudes de hardware -->
-                    <ul class="lists">
-                        <h3>Solicitud de Hardware</h3>
-                        <ul class="prAlta">
-                            <li class="A" *ngFor="let item of listaHardwareAlta">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia">
-                            <li class="B" *ngFor="let item of listaHardwareMedia">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja">
-                            <li class="C" *ngFor="let item of listaHardwareBaja">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de solicitudes de cambio de software -->
-                    <ul class="lists">
-                        <h3>Cambio de Software</h3>
-                        <ul class="prAlta">
-                            <li class="A" *ngFor="let item of listaSoftwareAlta">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia">
-                            <li class="B" *ngFor="let item of listaSoftwareMedia">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja">
-                            <li class="C" *ngFor="let item of listaSoftwareBaja">{{item}}</li>
-                        </ul>
-                    </ul>
-                    
                 </form>
             </div>
         </div>

@@ -1,0 +1,73 @@
+html {
+    height:100%;
+}
+
+body {
+    height: inherit;
+    margin: 0;
+}
+
+header {
+    background-color: #85C1E9;
+    font-size: 20px;
+}
+
+h1{
+    margin: 10px;
+}
+
+form.forms{
+    text-align: center;
+}
+
+
+ul{
+    list-style-type: none;
+    text-align: center;
+}
+
+ul li{
+    margin: 10px;
+}
+
+ul#foot{
+    list-style: none;
+    text-align: center;
+    display: inline-block;
+    background-color:#85C1E9;
+    width: 100%;
+}
+
+ul.lists{
+    text-align: left;
+}
+
+ul.prAlta{
+    text-align: left;
+    display: flex;
+    background-color: red;
+}
+
+ul.prMedia{
+    text-align: left;
+    display: flex;
+    background-color: yellow;
+}
+
+ul.prBaja{
+    text-align: left;
+    display: flex;
+    background-color: green;
+}
+
+div.form-floating{
+    margin-top: 10px;
+}
+
+div.row-cols-lg-auto{
+    margin-top: 10px;
+}
+
+h3{
+    font-size: 20px;
+}

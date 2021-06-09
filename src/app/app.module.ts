@@ -8,13 +8,15 @@ import { InicioComponent } from './inicio/inicio.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistroComponent } from './registro/registro.component';
 import { BackOfficeComponent } from './back-office/back-office.component';
+import { ForoComponent } from './foro/foro.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InicioComponent,
     RegistroComponent,
-    BackOfficeComponent
+    BackOfficeComponent,
+    ForoComponent
   ],
   imports: [
     BrowserModule,
