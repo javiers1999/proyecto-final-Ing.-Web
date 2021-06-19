@@ -1,1 +1,89 @@
-<p>back-office works!</p>
+<div class="container">
+    <div class="row">
+        <h1>Foro de Reclamos</h1>
+    </div>
+    <h2 id="reclamos">Tickets publicados</h2>
+                    <ul class="lists">
+                        <h3>Solicitudes Genericas</h3>
+                        <ul class="prAlta" *ngFor="let item of listaGenericaAlta">
+                            <li (click)="responder()" class="A" >{{item}}</li>
+                        </ul> 
+                        <ul class="prMedia" *ngFor="let item of listaGenericaMedia">
+                            <li (click)="responder()" class="B" >{{item}}</li>
+                        </ul>
+                        <ul class="prBaja" *ngFor="let item of listaGenericaBaja">
+                            <li (click)="responder()" class="C" >{{item}}</li>
+                        </ul>
+                    </ul>
+                    <!-- Listas de los reportes de solicitudes de cambio -->
+                    <ul class="lists">
+                        <h3>Cambio</h3>
+                        <ul class="prAlta" *ngFor="let item of listaCambioAlta">
+                            <li (click)="responder()" class="A" >{{item}}</li>
+                        </ul> 
+                        <ul class="prMedia" *ngFor="let item of listaCambioMedia">
+                            <li (click)="responder()" class="B" >{{item}}</li>
+                        </ul>
+                        <ul class="prBaja" *ngFor="let item of listaCambioBaja">
+                            <li (click)="responder()" class="C" >{{item}}</li>
+                        </ul>
+                    </ul>
+                    <!-- Listas de los reportes de incidentes -->
+                    <ul class="lists">
+                        <h3>Incidentes</h3>
+                        <ul class="prAlta" *ngFor="let item of listaIncidenteAlta">
+                            <li (click)="responder()" class="A" >{{item}}</li>
+                        </ul> 
+                        <ul class="prMedia" *ngFor="let item of listaIncidenteMedia">
+                            <li (click)="responder()" class="B">{{item}}</li>
+                        </ul>
+                        <ul class="prBaja" *ngFor="let item of listaIncidenteBaja">
+                            <li (click)="responder()" class="C">{{item}}</li>
+                        </ul>
+                    </ul>
+                    <!-- Listas de los reportes de problemas -->
+                    <ul class="lists">
+                        <h3>Problemas</h3>
+                        <ul class="prAlta" *ngFor="let item of listaProblemaAlta">
+                            <li (click)="responder()" class="A">{{item}}</li>
+                        </ul> 
+                        <ul class="prMedia" *ngFor="let item of listaProblemaMedia">
+                            <li (click)="responder()" class="B">{{item}}</li>
+                        </ul>
+                        <ul class="prBaja" *ngFor="let item of listaProblemaBaja">
+                            <li (click)="responder()" class="C">{{item}}</li>
+                        </ul>
+                    </ul>
+                    <!-- Listas de los reportes de solicitudes de hardware -->
+                    <ul class="lists">
+                        <h3>Solicitud de Hardware</h3>
+                        <ul class="prAlta" *ngFor="let item of listaHardwareAlta">
+                            <li (click)="responder()" class="A">{{item}}</li>
+                        </ul> 
+                        <ul class="prMedia" *ngFor="let item of listaHardwareMedia">
+                            <li (click)="responder()" class="B">{{item}}</li>
+                        </ul>
+                        <ul class="prBaja" *ngFor="let item of listaHardwareBaja">
+                            <li (click)="responder()" class="C">{{item}}</li>
+                        </ul>
+                    </ul>
+                    <!-- Listas de los reportes de solicitudes de cambio de software -->
+                    <ul class="lists">
+                        <h3>Cambio de Software</h3>
+                        <ul class="prAlta" *ngFor="let item of listaSoftwareAlta">
+                            <li (click)="responder()" class="A">{{item}}</li>
+                        </ul> 
+                        <ul class="prMedia" *ngFor="let item of listaSoftwareMedia">
+                            <li (click)="responder()" class="B">{{item}}</li>
+                        </ul>
+                        <ul class="prBaja" *ngFor="let item of listaSoftwareBaja">
+                            <li (click)="responder()" class="C">{{item}}</li>
+                        </ul>
+                    </ul>
+</div>
+<footer>
+    <ul id="foot">
+        <li>+971232312</li>
+        <li>empresa@reclamos.cl</li>
+    </ul>
+</footer>

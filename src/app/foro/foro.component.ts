@@ -128,5 +128,4 @@ export class ForoComponent implements OnInit {
 
     this.formularioReclamo.reset();
   }
-
 }

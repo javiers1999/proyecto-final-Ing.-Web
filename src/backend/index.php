@@ -17,6 +17,7 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
     case "PUT":
 
         if( !isset($user["rol"]) ) return;
+        
         // Actualizar ticket si el rol es de administrador
         if( $user["rol"] == 1 ) {
             
