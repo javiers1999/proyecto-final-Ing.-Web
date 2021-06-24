@@ -14,7 +14,7 @@
                     
                         <li>
                             <label class="form-label" for="contraseña">Contraseña</label>
-                            <input class="form-control" formControlName="contraseña" type="password" id="contraseña">
+                            <input class="form-control" formControlName="contrasena" type="password" id="contraseña">
                         </li>
                     
                         <li>
@@ -24,10 +24,9 @@
                         </li>
                     
                         <li>
-                            <a [routerLink]="['/foro']" routerLinkActive="router-link-active" >
-                                <button class="btn btn-danger" type="submit">Iniciar</button>
-                            </a>
+                           <button (click)="iniciarSesion()" class="btn btn-danger" type="submit">Iniciar</button>
                         </li>
+                          <div id="errorInfo"></div>
                         <li>
                             <a [routerLink]="['/admin']" routerLinkActive="router-link-active" > 
                                 <button class="btn btn-danger" type="submit">Iniciar como administrador</button>

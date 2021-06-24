@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup , FormBuilder , Validators} from '@angular/forms';
+import { RequestService } from '../request.service';
 
 @Component({
   selector: 'app-foro',
@@ -45,9 +46,11 @@ export class ForoComponent implements OnInit {
   listaSoftwareMedia:Array<String>=[];
   listaSoftwareBaja:Array<String>=[];
 
-  constructor(public fr:FormBuilder) { 
-
-    this.formularioReclamo = this.fr.group({
+  constructor(public fr:FormBuilder, private request: RequestService) { 
+      
+      this.request.getTickets().subscribe( res => console.log(res) );
+      
+      this.formularioReclamo = this.fr.group({
       asunto:['',Validators.required],
       descripcion:['',Validators.required],
       categorias:['',Validators.required],
