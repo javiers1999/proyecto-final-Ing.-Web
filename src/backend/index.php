@@ -1,6 +1,7 @@
 <?php
 
 include("Database.php");
+header("Access-Control-Allow-Origin: *");
 
 $db = new Database();
 if( $db->connection == NULL ) exit(0);
@@ -11,13 +12,12 @@ $user = NULL;
 session_start();
 if( isset($_SESSION["token"]) )
    $user = $db->validarToken($_SESSION["token"]);
-    
+
 switch( $_SERVER["REQUEST_METHOD"] ) {
 
     case "PUT":
 
         if( !isset($user["rol"]) ) return;
-        
         // Actualizar ticket si el rol es de administrador
         if( $user["rol"] == 1 ) {
             
@@ -40,6 +40,7 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
     case "DELETE":
 
         if( !isset($user["rol"]) ) return;
+        
         // Borrar ticket si el rol es de administrador
         if( $user["rol"] == 1 ) {
             
@@ -76,14 +77,29 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             session_destroy();
 
             break;
+        
+        // Obtener usuario
+        } else if( isset($_GET["user"]) ) {
+           
+           if( $user != NULL ) {
+              
+              $json["nombre"] = utf8_encode($user["nombres"]." ".$user["apellidos"]);
+              $json["rol"] = $user["rol"];
+              
+              echo json_encode($json);
+              
+           }
+           
+           break;
         }
 
         // Obtener Tickets
-        $json_username = "";
+        $json_user = array();
         if( isset($_SESSION["token"]) ) {
 
             if( $user != NULL ) {
-               $json_username = utf8_encode($user["nombres"]." ".$user["apellidos"]);
+               $json_user["nombre"] = utf8_encode($user["nombres"]." ".$user["apellidos"]);
+               $json_user["rol"] = $user["rol"];
             }
 
         }
@@ -94,10 +110,10 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
         $json_tickets = array();
         foreach( $tickets as $ticket ) {
 
-            $t["id"]          = $ticket["id"];
-            $t["estado"]      = $ticket["estado"];
-            $t["prioridad"]   = $ticket["prioridad"];
-            $t["categoria"]   = $ticket["categoria"];
+            $t["id"]          = intval($ticket["id"]);
+            $t["estado"]      = intval($ticket["estado"]);
+            $t["prioridad"]   = intval($ticket["prioridad"]);
+            $t["categoria"]   = intval($ticket["categoria"]);
             $t["asunto"]      = utf8_encode($ticket["asunto"]);
             $t["descripcion"] = utf8_encode($ticket["descripcion"]);
             $t["respuesta"]   = utf8_encode($ticket["respuesta"]);
@@ -105,8 +121,7 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             array_push( $json_tickets, $t );
         }
         
-        $json["username"] = $json_username;
-        $json["tickets"]  = $json_tickets;
+        $json = array($json_user, $json_tickets);
         echo json_encode( $json, JSON_UNESCAPED_UNICODE );
         break;
 
@@ -117,8 +132,7 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             // Inicio de sesion
             if( isset($_POST["nombre_usuario"]) && isset($_POST["password"]) ) {
                 
-             
-                $stmt = $con->prepare("SELECT password FROM usuarios WHERE nombre_usuario=?");
+                $stmt = $con->prepare("SELECT nombres, apellidos, rol, password FROM usuarios WHERE nombre_usuario=?");
                 $res = $stmt->execute( array($_POST["nombre_usuario"]) );
                 
                 $user = $stmt->fetch();
@@ -132,6 +146,11 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
                         if( $up == 1 ) {
 
                             $_SESSION["token"] = $token;
+                            
+                            $json["nombre"] = utf8_encode($user["nombres"]." ".$user["apellidos"]);
+                            $json["rol"] = $user["rol"];
+                            
+                            echo json_encode($json);
 
                         } else {
 
@@ -156,7 +175,7 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
             // Registro de nuevo usuario
             else {
                 
-               $new_user = json_decode( file_get_contents("php://input"), TRUE );
+               $new_user = json_decode(file_get_contents("php://input"), TRUE );
                if( isset($new_user["nombre_usuario"]) ) {
                     
                   if( !$db->ingresarUsuario($new_user) ) {
@@ -169,12 +188,16 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
 
                   }
                   
+               } else {
+           
+                 header("HTTP/1.1 401 Unauthorized");
+                 
                }
             }
         }
 
         // Crear ticket si el rol es de usuario
-        else if( $user["rol"] == 0 ) {
+        else if( $user["rol"] == 1 ) {
             
             $ticket = json_decode( file_get_contents("php://input"), TRUE );
             if( $ticket != NULL ) {
@@ -190,6 +213,10 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
                }
             }
 
+        } else {
+           
+           header("HTTP/1.1 401 Unauthorized");
+           
         }
 
 }
