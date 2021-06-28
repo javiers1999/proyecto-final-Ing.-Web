@@ -3,7 +3,7 @@ export interface Ticket {
    categoria: number;
    prioridad: number;
    estado: number;
-   asunto: String;
-   descripcion: String;
-   respuesta: String;
+   asunto: string;
+   descripcion: string;
+   respuesta: string;
 }

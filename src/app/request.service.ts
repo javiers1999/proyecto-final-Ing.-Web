@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Ticket } from './ticket';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RequestService {
+
+   private url:string = "http://localhost/iwpf/index.php";
 
    constructor(private http: HttpClient) { }
    
@@ -20,22 +23,43 @@ export class RequestService {
          headers: {'Content-type': 'application/x-www-form-urlencoded'}
       }
       
-      return this.http.post("http://localhost/iwpf/index.php", creds, opt).pipe(catchError(this.handleError));
+      return this.http.post<User>(this.url, creds, opt)
+                      .pipe( catchError(this.handleError) );
+   }
+
+   sendTicket(ticket:Ticket) {
+      let opt:any = { 
+         observe: 'response',
+         headers: {'Content-type': 'application/x-www-form-urlencoded'}
+      }
+
+      return this.http.post(this.url, ticket, opt)
+                      .pipe( catchError(this.handleError) );
    }
    
    getTickets() {
-      return this.http.get("http://localhost/iwpf/index.php", {observe:'body'});
+      return this.http.get<Ticket>(this.url, {observe:'body'});
+   }
+
+   getUser() {
+      return this.http.get<User>(this.url+"?user", {observe:'body'});
    }
    
    private handleError(error: HttpErrorResponse) {
+      let ediv : HTMLElement = <HTMLElement>document.getElementById("errorInfo");
       
       if( error.status == 401 ) {
-         let ediv : HTMLElement = <HTMLElement>document.getElementById("errorInfo");
-         
+
          if( ediv !== null )
             ediv.innerHTML = "Nombre de Usuario o Contraseña erroneos";
+
+      } else if ( error.status == 500 ) {
+
+         if( ediv !== null )
+            ediv.innerHTML = "Hubo un error en el servidor";
+
       }
       
-      return throwError('');
+      return throwError(error.status);
    }
 }

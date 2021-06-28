@@ -42,19 +42,31 @@ ul.lists{
     text-align: left;
 }
 
-ul.prAlta{
+.ticket {
+    display: flex;
+    margin: 0.5em;
+    flex-direction: column;
+    padding: 1em;
+
+    h2 {
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid black;
+    }
+}
+
+.pr2{
     text-align: left;
     display: flex;
     background-color: red;
 }
 
-ul.prMedia{
+.pr1{
     text-align: left;
     display: flex;
     background-color: yellow;
 }
 
-ul.prBaja{
+.pr0{
     text-align: left;
     display: flex;
     background-color: green;
