@@ -91,6 +91,33 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
            }
            
            break;
+        
+        //Obtener Regiones y Comunas
+        } else if( isset($_GET["regiones"]) ) {
+            
+            $query = $con->query("SELECT * FROM regiones ORDER BY nombre ASC");
+            $regiones = $query->fetchAll();
+            
+            $json_regiones = array();
+            foreach($regiones as $region) {
+               $json_region["id"]     = $region["ID"];
+               $json_region["nombre"] = utf8_encode($region["nombre"]);
+               array_push($json_regiones, $json_region);
+            }
+            
+            $query = $con->query("SELECT * FROM comunas ORDER BY nombre ASC");
+            $comunas = $query->fetchAll();
+            
+            $json_comunas = array();
+            foreach($comunas as $comuna) {
+               $json_comuna["id"]     = $comuna["ID"];
+               $json_comuna["nombre"] = utf8_encode($comuna["nombre"]);
+               array_push($json_comunas, $json_comuna);
+            }
+            
+            echo json_encode(array($json_regiones, $json_comunas));
+            break;
+            
         }
 
         // Obtener Tickets
@@ -177,22 +204,22 @@ switch( $_SERVER["REQUEST_METHOD"] ) {
                 
                $new_user = json_decode(file_get_contents("php://input"), TRUE );
                if( isset($new_user["nombre_usuario"]) ) {
-                    
-                  if( !$db->ingresarUsuario($new_user) ) {
-
-                     header("HTTP/1.1 500 Internal Server Error");
+                   
+                  $res = $db->ingresarUsuario($new_user);
+                  if( $res == 1 ) {
+                     
+                     header("HTTP/1.1 201 Created");
+                     
 
                   } else {
-
-                     header("HTTP/1.1 201 Created");
+                     
+                     header("HTTP/1.1 500 Internal Server Error");
+                     echo $res;
 
                   }
                   
-               } else {
-           
-                 header("HTTP/1.1 401 Unauthorized");
-                 
                }
+               
             }
         }
 
