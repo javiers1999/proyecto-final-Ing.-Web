@@ -36,13 +36,15 @@ export class RequestService {
       return this.http.post(this.url, ticket, opt)
                       .pipe( catchError(this.handleError) );
    }
-   
-   getTickets() {
-      return this.http.get<Ticket>(this.url, {observe:'body'});
-   }
 
-   getUser() {
-      return this.http.get<User>(this.url+"?user", {observe:'body'});
+   register(user:User) {
+      let opt:any = { 
+         observe: 'response',
+         headers: {'Content-type': 'application/x-www-form-urlencoded'}
+      }
+
+      return this.http.post(this.url, user, opt)
+                      .pipe( catchError(this.handleError) );
    }
    
    private handleError(error: HttpErrorResponse) {
@@ -57,9 +59,23 @@ export class RequestService {
 
          if( ediv !== null )
             ediv.innerHTML = "Hubo un error en el servidor";
-
+         else alert( error.error );
+         
       }
       
+      
       return throwError(error.status);
+   }
+
+   getTickets() {
+      return this.http.get<Ticket>(this.url, {observe:'body'});
+   }
+
+   getUser() {
+      return this.http.get<User>(this.url+"?user", {observe:'body'});
+   }
+
+   getRegions() {
+      return this.http.get(this.url+"?regiones", {observe:'body'});
    }
 }

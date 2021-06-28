@@ -8,6 +8,7 @@ import { Ticket } from '../ticket';
   templateUrl: './foro.component.html',
   styleUrls: ['./foro.component.scss']
 })
+
 export class ForoComponent implements OnInit {
 
   formulario:FormGroup;

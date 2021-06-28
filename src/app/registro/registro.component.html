@@ -3,66 +3,61 @@
         <h1>Foro de Reclamos</h1>
     </div>
     <div class="row"></div>
-        <form [formGroup]="formularioRegistro" class="forms" action="?" method="POST">
+        <form [formGroup]="formulario" class="forms" (ngSubmit)="registrarUsuario()">
             <h2>Formulario de Registro</h2>
             <ul id="forms1">
                 <li>
+                    <label class="form-label" for="nombre_usuario">Nombre de Usuario</label>
+                    <input class="form-control" type="text" formControlName="nombre_usuario">
+                </li>
+                <li>
                     <label class="form-label" for="nombres">Nombres</label>
-                    <input class="form-control" type="text" formControlName="nombres" name="nombres" id="nombres">
+                    <input class="form-control" type="text" formControlName="nombres">
                 </li>
                 <li>
                     <label class="form-label" for="apellidos">Apellidos</label>
-                    <input class="form-control" type="text" formControlName="apellidos" name="apellidos" id="apellidos">
+                    <input class="form-control" type="text" formControlName="apellidos">
                 </li>
                 <li>
-                    <label class="form-label" for="rut">Rut</label>
-                    <input class="form-control" type="text" formControlName="rut" name="rut" id="rut">
+                    <label class="form-label" for="rut">Rut (Sin puntos ni digito verificador)</label>
+                    <input class="form-control" type="number" formControlName="rut">
                 </li>
                 <li>
-                    <label class="form-label" for="pass">Contraseña</label>
-                    <input class="form-control" type="password" formControlName="pass" name="pass" id="pass">
+                    <label class="form-label" for="password">Contraseña</label>
+                    <input class="form-control" type="password" formControlName="password">
+                </li>
+                <li>
+                    <label class="form-label" for="conf_password">Confirmar Contraseña</label>
+                    <input class="form-control" type="password" formControlName="conf_password">
                 </li>
                 <li>
                     <label class="form-label" for="correo">Correo Electronico</label>
-                    <input class="form-control" type="mail" formControlName="correo" name="correo" id="correo">
+                    <input class="form-control" type="mail" formControlName="correo">
                 </li>
                 <li>
                     <label class="form-label" for="direccion">Direccion</label>
-                    <input class="form-control" type="text" formControlName="direccion" name="direccion" id="direccion">
+                    <input class="form-control" type="text" formControlName="direccion">
                 </li>
                 <li>
                     <label class="form-label" for="region">Region</label>
-                    <select class="form-select" aria-label="Region" formControlName="region" id="region">
+                    <select class="form-select" aria-label="Region" formControlName="region">
                         <option selected value="">Seleccionar..</option>
-                        <option id="1" value="AP">Arica y Parinacota</option>
-                        <option id="2" value="TA">Tarapaca</option>
-                        <option id="3" value="AN">Antofagasta</option>
-                        <option id="4" value="AT">Atacama</option>
-                        <option id="5" value="CO">Coquimbo</option>
-                        <option id="6" value="VA">Valparaiso</option>
-                        <option id="7" value="RM">Metropolitana</option>
-                        <option id="8" value="OH">Ohiggins</option>
-                        <option id="9" value="MA">Maule</option>
-                        <option id="10" value="NU">Ñuble</option>
-                        <option id="11" value="BI">Bio Bio</option>
-                        <option id="12" value="IAR">La Araucania</option>
-                        <option id="13" value="LR">Los Rios</option>
-                        <option id="14" value="LL">Los Lagos</option>
-                        <option id="15" value="AY">Aysen</option>
-                        <option id="16" value="MG">Magallanes</option>
+                        <ng-container *ngFor="let region of regiones">
+                            <option value="{{region.id}}">{{region.nombre}}</option>
+                        </ng-container>
                     </select>
                 </li>
                 <li>
                     <label class="form-label" for="comuna">Comuna</label>
-                    <select class="form-select" formControlName="comuna">
+                    <select class="form-select" aria-label="Comuna" formControlName="comuna">
                         <option selected value="">Seleccionar..</option>
+                        <ng-container *ngFor="let comuna of comunas">
+                            <option value="{{comuna.id}}">{{comuna.nombre}}</option>
+                        </ng-container>
                     </select>
-                    <!--Select-->
                 </li>
                 <li>
-                    <a [routerLink]="['']" routerLinkActive="router-link-active" >
-                        <button class="btn btn-danger" type="submit">Registrarse</button>
-                    </a>
+                    <button class="btn btn-danger" type="submit">Registrarse</button>
                 </li>
             </ul>
         </form>
