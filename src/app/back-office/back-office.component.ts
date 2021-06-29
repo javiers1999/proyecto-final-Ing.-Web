@@ -34,7 +34,7 @@ export class BackOfficeComponent implements OnInit {
 
       if( res.length == 2 ) {
         
-        /*
+      
         if( res[0] == null ) {
 
           location.assign("/");
@@ -46,7 +46,7 @@ export class BackOfficeComponent implements OnInit {
           return;
 
         }
-        */
+       
 
         let user : User = res[0];
         this.user.push(user);
