@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup , FormBuilder , Validators, FormControl} from '@angular/forms';
 import { RequestService } from '../request.service';
 import { Ticket } from '../ticket';
+import { User } from '../user';
 
 @Component({
   selector: 'app-foro',
@@ -13,15 +14,24 @@ export class ForoComponent implements OnInit {
 
   formulario:FormGroup;
   tickets: Array<Ticket> = [];
+  user: Array<User> = [];
 
   constructor(public fr:FormBuilder, private request: RequestService) { 
-      
+  
       this.request.getTickets().subscribe( (res:any) => {
+
         if( res.length == 2 ) {
-          if( res[1] != null ) {
-            for(let i =0; i < res[1].length; i++)
-              this.tickets.push(res[1][i]);
+          
+          if( res[0] == null ) {
+            location.assign("/");
+            return;
           }
+
+          let user : User = res[0];
+          this.user.push(user);
+          
+          for(let i =0; i < res[1].length; i++)
+            this.tickets.push(res[1][i]);
         }
       });
 
@@ -53,6 +63,7 @@ export class ForoComponent implements OnInit {
       let ticket:Ticket = {
         id:-1,
         estado: 0,
+        autor: this.user[0].rut,
         asunto: <string>asunto.value,
         descripcion: <string>descripcion.value,
         prioridad: <number>prioridad.value,
@@ -62,6 +73,7 @@ export class ForoComponent implements OnInit {
 
       this.request.sendTicket(ticket).subscribe( (res:any) => {
         if( res.status == 201 ) {
+          ticket.id = parseInt(res.body);
           this.tickets.push(ticket);
           this.formulario.reset();
         }

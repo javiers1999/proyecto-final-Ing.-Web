@@ -1,89 +1,204 @@
+<!-- Filtros -->
+<div id="filter">
+    <h2>Filtrar Solicitudes</h2>
+    <input id="filtro-palabra" type="text" placeholder="Buscar palabra">
+    <label class="form-label" for="estado">Categoria</label>
+    <select id="filtro-categoria">
+        <option selected value="">Seleccionar...</option>
+        <option value="0">Solicitud Generica</option>
+        <option value="1">Solicitud de Cambio</option>
+        <option value="2">Incidente</option>
+        <option value="3">Problema</option>
+        <option value="4">Solicitud de Hardware</option>
+        <option value="5">Solicitud de Software Nuevo</option>
+    </select>
+    <label class="form-label" for="estado">Estado</label>
+    <select id="filtro-estado">
+        <option selected value="">Seleccionar...</option>
+        <option value="0">Abierto</option>
+        <option value="1">En desarrollo</option>
+        <option value="2">Cerrado</option>
+    </select>
+</div>
+
 <div class="container">
-    <div class="row">
-        <h1>Foro de Reclamos</h1>
+    <!-- Dialogo para actualizar ticket -->
+    <div id="edit-bg" style="display:none">
+        <div id="edit-dialog" class="row">
+            <h2>Actualizar Ticket</h2>
+            <form [formGroup]="formulario" class="forms" (ngSubmit)="actualizarTicket()">
+                <label class="form-label" for="estado">Estado</label>
+                <select id="estado" formControlName="estado" class="form-select">
+                    <option selected value="">Seleccionar...</option>
+                    <option value="0">Abierto</option>
+                    <option value="1">En desarrollo</option>
+                    <option value="2">Cerrado</option>
+                </select>
+
+                <label>Respuesta</label>
+                <textarea formControlName="respuesta" class="form-control" id="respuesta">
+                </textarea>
+                <input type="submit" value="Actualizar" class="btn btn-primary">
+            </form>
+        </div>
     </div>
-    <h2 id="reclamos">Tickets publicados</h2>
-                    <ul class="lists">
-                        <h3>Solicitudes Genericas</h3>
-                        <ul class="prAlta" *ngFor="let item of listaGenericaAlta">
-                            <li (click)="responder()" class="A" >{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia" *ngFor="let item of listaGenericaMedia">
-                            <li (click)="responder()" class="B" >{{item}}</li>
-                        </ul>
-                        <ul class="prBaja" *ngFor="let item of listaGenericaBaja">
-                            <li (click)="responder()" class="C" >{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de solicitudes de cambio -->
-                    <ul class="lists">
-                        <h3>Cambio</h3>
-                        <ul class="prAlta" *ngFor="let item of listaCambioAlta">
-                            <li (click)="responder()" class="A" >{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia" *ngFor="let item of listaCambioMedia">
-                            <li (click)="responder()" class="B" >{{item}}</li>
-                        </ul>
-                        <ul class="prBaja" *ngFor="let item of listaCambioBaja">
-                            <li (click)="responder()" class="C" >{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de incidentes -->
-                    <ul class="lists">
-                        <h3>Incidentes</h3>
-                        <ul class="prAlta" *ngFor="let item of listaIncidenteAlta">
-                            <li (click)="responder()" class="A" >{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia" *ngFor="let item of listaIncidenteMedia">
-                            <li (click)="responder()" class="B">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja" *ngFor="let item of listaIncidenteBaja">
-                            <li (click)="responder()" class="C">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de problemas -->
-                    <ul class="lists">
-                        <h3>Problemas</h3>
-                        <ul class="prAlta" *ngFor="let item of listaProblemaAlta">
-                            <li (click)="responder()" class="A">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia" *ngFor="let item of listaProblemaMedia">
-                            <li (click)="responder()" class="B">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja" *ngFor="let item of listaProblemaBaja">
-                            <li (click)="responder()" class="C">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de solicitudes de hardware -->
-                    <ul class="lists">
-                        <h3>Solicitud de Hardware</h3>
-                        <ul class="prAlta" *ngFor="let item of listaHardwareAlta">
-                            <li (click)="responder()" class="A">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia" *ngFor="let item of listaHardwareMedia">
-                            <li (click)="responder()" class="B">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja" *ngFor="let item of listaHardwareBaja">
-                            <li (click)="responder()" class="C">{{item}}</li>
-                        </ul>
-                    </ul>
-                    <!-- Listas de los reportes de solicitudes de cambio de software -->
-                    <ul class="lists">
-                        <h3>Cambio de Software</h3>
-                        <ul class="prAlta" *ngFor="let item of listaSoftwareAlta">
-                            <li (click)="responder()" class="A">{{item}}</li>
-                        </ul> 
-                        <ul class="prMedia" *ngFor="let item of listaSoftwareMedia">
-                            <li (click)="responder()" class="B">{{item}}</li>
-                        </ul>
-                        <ul class="prBaja" *ngFor="let item of listaSoftwareBaja">
-                            <li (click)="responder()" class="C">{{item}}</li>
-                        </ul>
-                    </ul>
+    <!-- Tickets -->
+    <h2 id="reclamos">Tickets publicados {{num_tickets}}, Usuarios registrados: {{num_usuarios}}</h2>
+    <div id="leyenda">
+        <h3>Leyenda de Colores</h3>
+        <label>Prioridad Baja</label><div class="rectangle" style="background-color: green;"></div>
+        <label>Prioridad Media</label><div class="rectangle" style="background-color: yellow;"></div>
+        <label>Prioridad Alta</label><div class="rectangle" style="background-color: indianred;"></div>   
+    </div>
+    <ul class="lists">
+        <!-- Listas de los reportes de solicitudes genericas -->
+        <h3>Solicitudes Genericas</h3>
+        <ul *ngFor="let item of tickets">
+            <div *ngIf="item.categoria == 0" class="ticket pr{{item.prioridad}}" (click)="seleccionarTicket(item.id)">
+                <p>Ticket #{{item.id}}</p>
+                <h2>{{item.asunto}}</h2>
+                <p>{{item.descripcion}}</p>
+                <div class="ticket-info">
+                    <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                    <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                    <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                    <p>RUT del Autor: {{item.autor}}</p>
+                </div>
+
+                <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                    <h3>Respuesta</h3>
+                    <p style="font-style: italic;">
+                        {{item.respuesta}}
+                    </p>
+                </div>
+            </div>
+        </ul>
+    </ul>
+    <!-- Listas de los reportes de solicitudes de cambio -->
+    <ul class="lists">
+        <h3>Solicitud de Cambio</h3>
+        <ul *ngFor="let item of filtrados">
+            <div *ngIf="item.categoria == 1" class="ticket pr{{item.prioridad}}" (click)="seleccionarTicket(item.id)">
+                <p>Ticket #{{item.id}}</p>
+                <h2>{{item.asunto}}</h2>
+                <p>{{item.descripcion}}</p>
+                <div class="ticket-info">
+                    <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                    <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                    <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                    <p>RUT del Autor: {{item.autor}}</p>
+                </div>
+
+                <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                    <h3>Respuesta</h3>
+                    <p style="font-style: italic;">
+                        {{item.respuesta}}
+                    </p>
+                </div>
+            </div>
+        </ul> 
+    </ul>
+    <!-- Listas de los reportes de incidentes -->
+    <ul class="lists">
+        <h3>Incidentes</h3>
+        <ul *ngFor="let item of filtrados">
+            <div *ngIf="item.categoria == 2" class="ticket pr{{item.prioridad}}" (click)="seleccionarTicket(item.id)">
+                <p>Ticket #{{item.id}}</p>
+                <h2>{{item.asunto}}</h2>
+                <p>{{item.descripcion}}</p>
+                <div class="ticket-info">
+                    <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                    <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                    <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                    <p>RUT del Autor: {{item.autor}}</p>
+                </div>
+
+                <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                    <h3>Respuesta</h3>
+                    <p style="font-style: italic;">
+                        {{item.respuesta}}
+                    </p>
+                </div>
+            </div>
+        </ul> 
+    </ul>
+    <!-- Listas de los reportes de problemas -->
+    <ul class="lists">
+        <h3>Problemas</h3>
+        <ul *ngFor="let item of filtrados">
+            <div *ngIf="item.categoria == 3" class="ticket pr{{item.prioridad}}" (click)="seleccionarTicket(item.id)">
+                <p>Ticket #{{item.id}}</p>
+                <h2>{{item.asunto}}</h2>
+                <p>{{item.descripcion}}</p>
+                <div class="ticket-info">
+                    <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                    <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                    <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                    <p>RUT del Autor: {{item.autor}}</p>
+                </div>
+
+                <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                    <h3>Respuesta</h3>
+                    <p style="font-style: italic;">
+                        {{item.respuesta}}
+                    </p>
+                </div>
+            </div>
+        </ul> 
+    </ul>
+    <!-- Listas de los reportes de solicitudes de hardware -->
+    <ul class="lists">
+        <h3>Solicitud de Hardware</h3>
+        <ul *ngFor="let item of filtrados">
+            <div *ngIf="item.categoria == 4" class="ticket pr{{item.prioridad}}" (click)="seleccionarTicket(item.id)">
+                <p>Ticket #{{item.id}}</p>
+                <h2>{{item.asunto}}</h2>
+                <p>{{item.descripcion}}</p>
+                <div class="ticket-info">
+                    <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                    <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                    <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                    <p>RUT del Autor: {{item.autor}}</p>
+                </div>
+
+                <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                    <h3>Respuesta</h3>
+                    <p style="font-style: italic;">
+                        {{item.respuesta}}
+                    </p>
+                </div>
+            </div>
+        </ul> 
+    </ul>
+    <!-- Listas de los reportes de solicitudes de software nuevo -->
+    <ul class="lists">
+        <h3>Solicitud de Software Nuevo</h3>
+        <ul *ngFor="let item of filtrados">
+            <div *ngIf="item.categoria == 5" class="ticket pr{{item.prioridad}}" (click)="seleccionarTicket(item.id)">
+                <p>Ticket #{{item.id}}</p>
+                <h2>{{item.asunto}}</h2>
+                <p>{{item.descripcion}}</p>
+                <div class="ticket-info">
+                    <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                    <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                    <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                    <p>RUT del Autor: {{item.autor}}</p>
+                </div>
+
+                <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                    <h3>Respuesta</h3>
+                    <p style="font-style: italic;">
+                        {{item.respuesta}}
+                    </p>
+                </div>
+            </div>
+        </ul> 
+    </ul>
 </div>
 <footer>
     <ul id="foot">
         <li>+971232312</li>
         <li>empresa@reclamos.cl</li>
+        <li><a href="/backend/index.php?logout">Cerrar Sesion</a></li>
     </ul>
 </footer>

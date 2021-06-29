@@ -71,3 +71,47 @@ div.row-cols-lg-auto{
 h3{
     font-size: 20px;
 }
+
+#edit-bg {
+    background-color: #0005;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+#edit-dialog {
+    background-color: white;
+    padding: 1em;
+    border-radius: 0.5em;
+}
+
+#filter {
+    background-color: antiquewhite;
+    padding: 1em;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#leyenda {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 0;
+
+    label {
+        margin: 0 1em;
+    }
+}
+
+.rectangle {
+    height: 1em;
+    width: 1em;
+    border-radius: 0.3em;
+}

@@ -53,18 +53,46 @@
             <h3>Solicitudes Genericas</h3>
             <ul *ngFor="let item of tickets">
                 <div *ngIf="item.categoria == 0" class="ticket pr{{item.prioridad}}">
+                    <p>Ticket #{{item.id}}</p>
                     <h2>{{item.asunto}}</h2>
                     <p>{{item.descripcion}}</p>
+                    <div class="ticket-info">
+                        <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                        <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                        <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                        <p>RUT del Autor: {{item.autor}}</p>
+                    </div>
+
+                    <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                        <h3>Respuesta</h3>
+                        <p style="font-style: italic;">
+                            {{item.respuesta}}
+                        </p>
+                    </div>
                 </div>
             </ul>
         </ul>
         <!-- Listas de los reportes de solicitudes de cambio -->
         <ul class="lists">
-            <h3>Cambio</h3>
+            <h3>Solicitudes de Cambio</h3>
             <ul *ngFor="let item of tickets">
                 <div *ngIf="item.categoria == 1" class="ticket pr{{item.prioridad}}">
+                    <p>Ticket #{{item.id}}</p>
                     <h2>{{item.asunto}}</h2>
                     <p>{{item.descripcion}}</p>
+                    <div class="ticket-info">
+                        <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                        <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                        <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                        <p>RUT del Autor: {{item.autor}}</p>
+                    </div>
+
+                    <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                        <h3>Respuesta</h3>
+                        <p style="font-style: italic;">
+                            {{item.respuesta}}
+                        </p>
+                    </div>
                 </div>
             </ul> 
         </ul>
@@ -73,8 +101,22 @@
             <h3>Incidentes</h3>
             <ul *ngFor="let item of tickets">
                 <div *ngIf="item.categoria == 2" class="ticket pr{{item.prioridad}}">
+                    <p>Ticket #{{item.id}}</p>
                     <h2>{{item.asunto}}</h2>
                     <p>{{item.descripcion}}</p>
+                    <div class="ticket-info">
+                        <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                        <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                        <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                        <p>RUT del Autor: {{item.autor}}</p>
+                    </div>
+
+                    <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                        <h3>Respuesta</h3>
+                        <p style="font-style: italic;">
+                            {{item.respuesta}}
+                        </p>
+                    </div>
                 </div>
             </ul> 
         </ul>
@@ -83,8 +125,22 @@
             <h3>Problemas</h3>
             <ul *ngFor="let item of tickets">
                 <div *ngIf="item.categoria == 3" class="ticket pr{{item.prioridad}}">
+                    <p>Ticket #{{item.id}}</p>
                     <h2>{{item.asunto}}</h2>
                     <p>{{item.descripcion}}</p>
+                    <div class="ticket-info">
+                        <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                        <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                        <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                        <p>RUT del Autor: {{item.autor}}</p>
+                    </div>
+
+                    <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                        <h3>Respuesta</h3>
+                        <p style="font-style: italic;">
+                            {{item.respuesta}}
+                        </p>
+                    </div>
                 </div>
             </ul> 
         </ul>
@@ -93,18 +149,46 @@
             <h3>Solicitud de Hardware</h3>
             <ul *ngFor="let item of tickets">
                 <div *ngIf="item.categoria == 4" class="ticket pr{{item.prioridad}}">
+                    <p>Ticket #{{item.id}}</p>
                     <h2>{{item.asunto}}</h2>
                     <p>{{item.descripcion}}</p>
+                    <div class="ticket-info">
+                        <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                        <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                        <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                        <p>RUT del Autor: {{item.autor}}</p>
+                    </div>
+
+                    <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                        <h3>Respuesta</h3>
+                        <p style="font-style: italic;">
+                            {{item.respuesta}}
+                        </p>
+                    </div>
                 </div>
             </ul> 
         </ul>
         <!-- Listas de los reportes de solicitudes de cambio de software -->
         <ul class="lists">
-            <h3>Cambio de Software</h3>
+            <h3>Solicitud de Software Nuevo</h3>
             <ul *ngFor="let item of tickets">
                 <div *ngIf="item.categoria == 5" class="ticket pr{{item.prioridad}}">
+                    <p>Ticket #{{item.id}}</p>
                     <h2>{{item.asunto}}</h2>
                     <p>{{item.descripcion}}</p>
+                    <div class="ticket-info">
+                        <h3 *ngIf="item.estado == 0">Estado: Abierto</h3>
+                        <h3 *ngIf="item.estado == 1">Estado: En desarrollo</h3>
+                        <h3 *ngIf="item.estado == 2">Estado: Cerrado</h3>
+                        <p>RUT del Autor: {{item.autor}}</p>
+                    </div>
+
+                    <div *ngIf="item.respuesta.length != 0"  class="ticket-response"> 
+                        <h3>Respuesta</h3>
+                        <p style="font-style: italic;">
+                            {{item.respuesta}}
+                        </p>
+                    </div>
                 </div>
             </ul> 
         </ul>
@@ -114,5 +198,6 @@
     <ul id="foot">
         <li>+971232312</li>
         <li>empresa@reclamos.cl</li>
+        <li><a href="/backend/index.php?logout">Cerrar Sesion</a></li>
     </ul>
 </footer>

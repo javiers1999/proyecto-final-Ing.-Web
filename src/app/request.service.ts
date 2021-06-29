@@ -11,7 +11,7 @@ import { User } from './user';
 
 export class RequestService {
 
-   private url:string = "http://localhost/iwpf/index.php";
+   private url:string = "http://localhost/backend/index.php";
 
    constructor(private http: HttpClient) { }
    
@@ -24,6 +24,16 @@ export class RequestService {
       }
       
       return this.http.post<User>(this.url, creds, opt)
+                      .pipe( catchError(this.handleError) );
+   }
+
+   updateTicket(ticket:Ticket) {
+      let opt:any = { 
+         observe: 'response',
+         headers: {'Content-type': 'application/x-www-form-urlencoded'}
+      }
+
+      return this.http.put(this.url, ticket, opt)
                       .pipe( catchError(this.handleError) );
    }
 
@@ -60,9 +70,8 @@ export class RequestService {
          if( ediv !== null )
             ediv.innerHTML = "Hubo un error en el servidor";
          else alert( error.error );
-         
+
       }
-      
       
       return throwError(error.status);
    }
@@ -77,5 +86,9 @@ export class RequestService {
 
    getRegions() {
       return this.http.get(this.url+"?regiones", {observe:'body'});
+   }
+
+   getInfo() {
+      return this.http.get(this.url+"?info", {observe:'body'});
    }
 }
