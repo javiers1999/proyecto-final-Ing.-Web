@@ -4,7 +4,7 @@
     <input id="filtro-palabra" type="text" placeholder="Buscar palabra">
     <label class="form-label" for="estado">Categoria</label>
     <select id="filtro-categoria">
-        <option selected value="">Seleccionar...</option>
+        <option selected value="">Todos</option>
         <option value="0">Solicitud Generica</option>
         <option value="1">Solicitud de Cambio</option>
         <option value="2">Incidente</option>
@@ -14,7 +14,7 @@
     </select>
     <label class="form-label" for="estado">Estado</label>
     <select id="filtro-estado">
-        <option selected value="">Seleccionar...</option>
+        <option selected value="">Todos</option>
         <option value="0">Abierto</option>
         <option value="1">En desarrollo</option>
         <option value="2">Cerrado</option>
@@ -53,7 +53,7 @@
     <ul class="lists">
         <!-- Listas de los reportes de solicitudes genericas -->
         <h3>Solicitudes Genericas</h3>
-        <ul *ngFor="let item of tickets">
+        <ul *ngFor="let item of filtrados">
             <div *ngIf="item.categoria == 0" class="ticket pr{{item.prioridad}}" (click)="seleccionarTicket(item.id)">
                 <p>Ticket #{{item.id}}</p>
                 <h2>{{item.asunto}}</h2>

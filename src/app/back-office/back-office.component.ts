@@ -34,6 +34,7 @@ export class BackOfficeComponent implements OnInit {
 
       if( res.length == 2 ) {
         
+        /*
         if( res[0] == null ) {
 
           location.assign("/");
@@ -45,6 +46,7 @@ export class BackOfficeComponent implements OnInit {
           return;
 
         }
+        */
 
         let user : User = res[0];
         this.user.push(user);
@@ -85,11 +87,12 @@ export class BackOfficeComponent implements OnInit {
   }
 
   filtrarTickets() {
+    
     this.filtrados = this.tickets.filter( (ticket:Ticket) => {
 
       let palabra: string = <string>this.fPalabra?.value.toLowerCase();
-      let categoria: string = <string>this.fCategoria?.value.toLowerCase();
-      let estado: string = <string>this.fEstado?.value.toLowerCase();
+      let categoria: string = <string>this.fCategoria?.value;
+      let estado: string = <string>this.fEstado?.value;
 
       return (ticket.asunto.toLowerCase().includes(palabra) || 
              ticket.descripcion.toLowerCase().includes(palabra)) &&
